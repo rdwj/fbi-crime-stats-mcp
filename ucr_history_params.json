@@ -1,0 +1,36 @@
+[
+  {
+    "name": "offense",
+    "type": "str",
+    "description": "Crime type to fetch history for. Must be one of: violent-crime, property-crime, homicide, burglary, motor-vehicle-theft",
+    "required": true
+  },
+  {
+    "name": "from_year",
+    "type": "int",
+    "description": "Start year for historical data (2015-present, default: 2020)",
+    "default": "2020",
+    "required": false
+  },
+  {
+    "name": "to_year",
+    "type": "int | None",
+    "description": "End year for historical data (default: current year)",
+    "default": "None",
+    "required": false
+  },
+  {
+    "name": "state",
+    "type": "str | None",
+    "description": "State code for state-level data (CA, TX, FL, NY, IL). If omitted, returns national-level data.",
+    "default": "None",
+    "required": false
+  },
+  {
+    "name": "format",
+    "type": "str",
+    "description": "Output format: 'summary' for prose, 'detailed' for full JSON",
+    "default": "\"summary\"",
+    "required": false
+  }
+]

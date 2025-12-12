@@ -1,0 +1,15 @@
+{
+  "generator": {
+    "tool": "fips-agents-cli",
+    "version": "0.1.7"
+  },
+  "template": {
+    "url": "https://github.com/rdwj/mcp-server-template",
+    "commit": "61fbc8466911",
+    "full_commit": "61fbc846691194c8435c38eff0982cc484601ba6"
+  },
+  "project": {
+    "name": "fbi-crime-stats-mcp",
+    "created_at": "2025-12-01T04:15:24.005652+00:00"
+  }
+}
