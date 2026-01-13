@@ -25,7 +25,7 @@ from core.app import mcp
 
 
 # Base URL for the FBI UCR API
-BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-mqwwr.mqwwr.sandbox1259.opentlc.com"
+BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
 
 # Supported states for state-level predictions
 VALID_STATES = frozenset(["CA", "TX", "FL", "NY", "IL"])

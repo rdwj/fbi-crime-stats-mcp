@@ -28,7 +28,7 @@ from pydantic import Field
 from core.app import mcp
 
 # Constants
-BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-mqwwr.mqwwr.sandbox1259.opentlc.com"
+BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
 VALID_OFFENSES = frozenset([
     "violent-crime",
     "property-crime",

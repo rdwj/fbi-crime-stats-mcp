@@ -27,7 +27,7 @@ from pydantic import Field
 from core.app import mcp
 
 # Backend API configuration
-API_BASE = "https://fbi-ucr-fbi-ucr.apps.cluster-mqwwr.mqwwr.sandbox1259.opentlc.com"
+API_BASE = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
 
 # Valid offense types
 VALID_OFFENSES = frozenset([
