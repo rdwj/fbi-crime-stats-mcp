@@ -18,6 +18,7 @@ NOT SUPPORTED:
 - Demographic breakdowns
 """
 
+import os
 from datetime import datetime
 from typing import Annotated
 
@@ -27,8 +28,9 @@ from pydantic import Field
 
 from core.app import mcp
 
-# Constants
-BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
+# Predictive service base URL. Override in deployment via PREDICTION_API_URL.
+# Local fallback assumes the predictive service is running on localhost:8080.
+BASE_URL = os.environ.get("PREDICTION_API_URL", "http://localhost:8080")
 VALID_OFFENSES = frozenset([
     "violent-crime",
     "property-crime",

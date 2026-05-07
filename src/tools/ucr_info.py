@@ -17,6 +17,7 @@ NOT SUPPORTED:
 - Demographic breakdowns
 """
 
+import os
 from typing import Annotated
 import httpx
 from fastmcp.exceptions import ToolError
@@ -24,8 +25,9 @@ from pydantic import Field
 from core.app import mcp
 
 
-# Base URL for the FBI UCR API
-BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
+# Predictive service base URL. Override in deployment via PREDICTION_API_URL.
+# Local fallback assumes the predictive service is running on localhost:8080.
+BASE_URL = os.environ.get("PREDICTION_API_URL", "http://localhost:8080")
 
 # Supported states for state-level predictions
 VALID_STATES = frozenset(["CA", "TX", "FL", "NY", "IL"])
