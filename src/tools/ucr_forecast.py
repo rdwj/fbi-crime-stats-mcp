@@ -263,10 +263,9 @@ def format_summary(
     # Model info
     model_type = model_info.get("model_type", model_info.get("model", "Unknown"))
     mape = model_info.get("mape", model_info.get("error_rate", 0))
-    accuracy = 100 - mape if mape else model_info.get("accuracy", 0)
     training_end = format_month(model_info.get("training_end", model_info.get("data_through", "")))
 
-    lines.append(f"Model: {model_type} | Accuracy: {accuracy:.1f}% | Data through: {training_end}")
+    lines.append(f"Model: {model_type} | MAPE: {mape:.1f}% (typical forecast error) | Data through: {training_end}")
 
     return "\n".join(lines)
 
