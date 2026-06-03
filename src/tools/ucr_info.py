@@ -1,6 +1,7 @@
 """Get information about available FBI UCR crime forecasting models.
 
-Lists all models or returns details for a specific offense including accuracy and methodology.
+Lists all models or returns details for a specific offense including MAPE
+(mean absolute percentage error — typical forecast error rate) and methodology.
 
 SUPPORTED SCOPE:
 - Geographic: National level + 5 states (CA, TX, FL, NY, IL)
@@ -17,6 +18,7 @@ NOT SUPPORTED:
 - Demographic breakdowns
 """
 
+import os
 from typing import Annotated
 import httpx
 from fastmcp.exceptions import ToolError
@@ -24,8 +26,9 @@ from pydantic import Field
 from core.app import mcp
 
 
-# Base URL for the FBI UCR API
-BASE_URL = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
+# Predictive service base URL. Override in deployment via PREDICTION_API_URL.
+# Local fallback assumes the predictive service is running on localhost:8080.
+BASE_URL = os.environ.get("PREDICTION_API_URL", "http://localhost:8080")
 
 # Supported states for state-level predictions
 VALID_STATES = frozenset(["CA", "TX", "FL", "NY", "IL"])
@@ -133,12 +136,11 @@ def _format_all_models(models: list[dict], state: str | None = None) -> str:
         description = OFFENSE_DESCRIPTIONS.get(offense, model.get("description", "No description available"))
         model_type = _format_model_type(model)
         mape = model.get("mape", 0)
-        accuracy = 100 - mape
         training_end = _format_month(model.get("training_end", "Unknown"))
 
         lines.append(f"{idx}. {offense}")
         lines.append(f"   Description: {description}")
-        lines.append(f"   Model: {model_type} | Accuracy: {accuracy:.1f}% (MAPE: {mape:.1f}%)")
+        lines.append(f"   Model: {model_type} | MAPE: {mape:.1f}% (typical forecast error)")
         lines.append(f"   Training data through: {training_end}")
         lines.append("")
 
@@ -165,7 +167,6 @@ def _format_model_details(model: dict) -> str:
     model_type = model.get("model_type", "Unknown")
     params = model.get("parameters", {})
     mape = model.get("mape", 0)
-    accuracy = 100 - mape
     training_end = _format_month(model.get("training_end", "Unknown"))
 
     # Format parameters
@@ -185,7 +186,7 @@ def _format_model_details(model: dict) -> str:
     ]
 
     lines.extend(params_lines)
-    lines.append(f"- Accuracy: {accuracy:.1f}% (MAPE: {mape:.1f}%)")
+    lines.append(f"- MAPE: {mape:.1f}% (typical forecast error — lower is better)")
     lines.append(f"- Training data: Through {training_end}")
 
     if why_model:
@@ -220,8 +221,9 @@ async def ucr_info(
 ) -> str:
     """Get information about available FBI UCR crime forecasting models.
 
-    Lists all models or returns details for a specific offense including accuracy
-    and methodology. Supports both national and state-level models.
+    Lists all models or returns details for a specific offense including MAPE
+    (typical forecast error rate, lower is better) and methodology. Supports
+    both national and state-level models.
 
     GEOGRAPHIC COVERAGE:
     - National (default): United States aggregate data

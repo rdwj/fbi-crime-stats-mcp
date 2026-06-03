@@ -18,6 +18,7 @@ NOT SUPPORTED:
 """
 
 import asyncio
+import os
 from typing import Literal
 
 import httpx
@@ -26,8 +27,9 @@ from pydantic import Field
 
 from core.app import mcp
 
-# Backend API configuration
-API_BASE = "https://fbi-ucr-fbi-ucr.apps.cluster-tw52m.tw52m.sandbox448.opentlc.com"
+# Predictive service base URL. Override in deployment via PREDICTION_API_URL.
+# Local fallback assumes the predictive service is running on localhost:8080.
+API_BASE = os.environ.get("PREDICTION_API_URL", "http://localhost:8080")
 
 # Valid offense types
 VALID_OFFENSES = frozenset([
